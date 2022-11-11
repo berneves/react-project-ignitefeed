@@ -1,0 +1,35 @@
+.section {
+    display:flex;
+    justify-content: space-between;
+    width: 100%;
+    background: var(--gray-400);
+    color: var(--white);
+    border-radius: 5px;
+    margin: 0.75rem auto;
+    padding: 0.75rem;
+    max-width: 46rem;
+    font-size: 0.875rem;
+}
+
+/* .section + .section {
+    margin: 0.75rem auto;
+} */
+
+
+.trash:hover {
+    color: var(--blue-200);
+    transition: 0.1s;
+     cursor: pointer;
+}
+
+button {
+    background: transparent;
+    border: none;
+    color: var(--white);
+}
+
+.conclude:hover {
+    color: var(--blue-200);
+    transition: 0.1s;
+    cursor: pointer;
+}
