@@ -7,27 +7,19 @@ export interface TaskProps{
   content: string,
   isConcluded: boolean
   onDelete?: (taskId: string) => void
+  onComplete?: (taskId: string) => void
+
 }
 
-export function Task({id, content, isConcluded, onDelete}: TaskProps) {
+export function Task({id, content, isConcluded, onDelete, onComplete}: TaskProps) {
 
-
-    const concluded = (isConcluded: Boolean) => {
-        if (isConcluded) {
-            return (<button className = {styles.conclude}>
-                <FiCheckCircle/>
-            </button>)
-        } else {
-            return (<button className = {styles.conclude}>
-                <FiCircle/>
-            </button>)
-        }
-    }
 
     return (
         <section className={styles.section}>
             <div>
-                {concluded(isConcluded)}
+                <button className = {styles.conclude} onClick = {() => onComplete!(id)}>
+                    {isConcluded ? <FiCheckCircle/> : <FiCircle/>}
+                </button>
             </div>
             <p>{content}</p>
             <button title = "deletar comentário" onClick={() => onDelete!(id)}>

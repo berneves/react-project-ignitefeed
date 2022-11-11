@@ -13,10 +13,9 @@ import { Task } from "./Task"
 // }
 
 export function FullTask() {
-    const [count, setCount] = useState(0);
-    const [completedTasks, setCompletedTasks] = useState(Number)
     const [tasks, setTasks] =  useState<TaskProps[]>([])
     const [newContent,setNewContent] = useState("")
+    const completedTasks = tasks.filter((task) => task.isConcluded).length
 
 
     const handleCreateNewTask= (event: FormEvent) => {
@@ -27,23 +26,13 @@ export function FullTask() {
             content: newContent,
             isConcluded: false
         }]);
-
-        setCount(count + 1);
-        setNewContent("");
+        setNewContent("")        
     }
+
     const handleSetNewTask= (event: ChangeEvent<HTMLTextAreaElement>) => {
         setNewContent(event.target.value);
     }
 
-    function handleCompletedTasks() {
-        let count = 0;
-        tasks.filter(task => {
-          if (task.isConcluded === true) {
-            count++;
-          }
-        })
-        setCompletedTasks(count)
-      };
 
     const hasTasks = (tasks: TaskProps[]) => {
         if (tasks.length === 0) {
@@ -66,18 +55,25 @@ export function FullTask() {
                         content = {task.content}
                         isConcluded = {task.isConcluded}
                         onDelete = {onDelete}
+                        onComplete = {onComplete}
                          />
                     })}
                 </article>
         )
     }
-    const handleToggleApproval = (id: string) => {
-        const oldTasks = tasks;
-        const findIndex = oldTasks.findIndex(t => t.id === id);
-        if(findIndex < 0) return null ;
-        oldTasks[findIndex].isConcluded = !oldTasks[findIndex].isConcluded
-        setTasks(oldTasks);
+    const onComplete = (id: string) => {
+       const newTasks =  tasks.map(task => {
+            if (task.id === id){
+                return {
+                    ...task, isConcluded: !task.isConcluded
+                };
+
+            }
+            return task
+        });
+        setTasks(newTasks)
     }
+
 
     const onDelete = (id: string) => {
         const newTasks = tasks.filter(t => t.id !== id);
@@ -90,14 +86,15 @@ export function FullTask() {
                 placeholder = "Adicione uma nova tarefa"
                 required
                 onChange = {handleSetNewTask}
+                value = {newContent}
                 />
                 <footer>
                     <button type = "submit" >Criar <AiOutlinePlusCircle size = {20}/> </button>
                 </footer>
             </form>
             <div className={styles.headerInfo}> 
-                <p className={styles.created}> Tarefas criadas <span>{count}</span></p>
-                <p className={styles.concluded}> Concluídas <span>{completedTasks} de {count}</span>
+                <p className={styles.created}> Tarefas criadas <span>{tasks.length}</span></p>
+                <p className={styles.concluded}> Concluídas <span>{completedTasks} de {tasks.length}</span>
                 </p>
             </div>
             <section>
