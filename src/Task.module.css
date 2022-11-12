@@ -28,8 +28,11 @@ button {
     color: var(--white);
 }
 
-.conclude:hover {
+button:hover {
     color: var(--blue-200);
     transition: 0.1s;
     cursor: pointer;
+}
+.concluded {
+    text-decoration: line-through;
 }

@@ -13,7 +13,7 @@ export interface TaskProps{
 
 export function Task({id, content, isConcluded, onDelete, onComplete}: TaskProps) {
 
-
+   
     return (
         <section className={styles.section}>
             <div>
@@ -21,7 +21,10 @@ export function Task({id, content, isConcluded, onDelete, onComplete}: TaskProps
                     {isConcluded ? <FiCheckCircle/> : <FiCircle/>}
                 </button>
             </div>
-            <p>{content}</p>
+            {isConcluded ? 
+                <p className = {styles.concluded}>{content}</p> : 
+                <p className = {styles.notConcluded}>{content}</p>
+            }
             <button title = "deletar comentário" onClick={() => onDelete!(id)}>
                 <FiTrash className={styles.trash}/>
             </button>
